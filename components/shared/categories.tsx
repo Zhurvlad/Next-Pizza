@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { cn } from "@/lib/utils";
-import { useCategoryStore } from "../../../store/category";
+import { useCategoryStore } from "../../store/category";
 
 interface Props {
   className?: string;

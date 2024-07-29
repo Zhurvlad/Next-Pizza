@@ -3,7 +3,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { useIntersection } from "react-use";
 import { ProductCard, Title } from ".";
-import { useCategoryStore } from "@/../store/category";
+import { useCategoryStore } from "@/store/category";
 
 interface Props {
   className?: string;
