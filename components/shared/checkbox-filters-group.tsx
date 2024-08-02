@@ -2,7 +2,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { FilterCheckbox, FilterCheckboxProps } from "./filter-checkbox";
-import { Input } from "../ui";
+import { Input, Skeleton } from "../ui";
 
 type Item = FilterCheckboxProps;
 
@@ -11,10 +11,13 @@ interface CheckboxFiltersGroupProps {
   items: Item[];
   defaultItems: Item[];
   limit?: number;
+  loading?: boolean;
   searchInputPlaceholder?: string;
-  onChange?: (values: string) => void;
+  onClickCheckbox?: (id: string) => void;
   defaultValue?: string[];
   className?: string;
+  selectedIds?: Set<string>;
+  name?: string;
 }
 
 export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupProps> = ({
@@ -24,11 +27,26 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupProps> = ({
   limit = 5,
   searchInputPlaceholder = "Поиск...",
   className,
-  onChange,
+  loading,
+  selectedIds,
+  name,
+  onClickCheckbox,
   defaultValue,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
+
+  if (loading) {
+    return (
+      <div className={className}>
+        <p className="font-bold mb-3">{title}</p>
+        {[...Array(limit).fill(0)].map((_, index) => (
+          <Skeleton key={index} className="h-6 mb-6 rounded-[8px]" />
+        ))}
+        <Skeleton className="w-28 h-6 mb-6 rounded-[8px]" />
+      </div>
+    );
+  }
 
   const list = showAll
     ? items.filter((item) =>
@@ -57,10 +75,11 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupProps> = ({
           <FilterCheckbox
             text={item.text}
             value={item.value}
-            onCheckedChange={(ids) => console.log(ids)}
-            checked={false}
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
+            checked={selectedIds?.has(item.value)}
             key={String(item.value)}
             endAdornment={item.endAdornment}
+            name={name}
           />
         ))}
       </div>
@@ -70,7 +89,7 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupProps> = ({
             className="text-primary mt-3"
             onClick={() => setShowAll(!showAll)}
           >
-            {showAll ? "Скрыть" : "+ Показать всё"}
+            {!showAll ? "Скрыть" : "+ Показать всё"}
           </button>
         </div>
       )}
