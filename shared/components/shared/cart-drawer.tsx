@@ -16,17 +16,45 @@ import Link from "next/link";
 import { Button } from "../ui";
 import { ArrowRight } from "lucide-react";
 import { CartDrawerItem } from ".";
+import { useCartStore } from "@/shared/store";
+import { getCartItemDetails } from "@/shared/lib";
+import { PizzaSize, PizzaType } from "@/shared/constance/pizza";
 
 interface Props {
   className?: string;
-  items: any[];
 }
 
 export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   className,
   children,
-  items,
 }) => {
+  const [
+    totalAmount,
+    fetchCartItems,
+    updateItemQuantity,
+    removeCartItem,
+    items,
+  ] = useCartStore((state) => [
+    state.totalAmount,
+    state.fetchCartItems,
+    state.updateItemQuantity,
+    state.removeCartItem,
+    state.items,
+  ]);
+
+  React.useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const onClickCountButton = (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
@@ -40,20 +68,30 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
         {/* <SheetClose /> */}
 
         <div className="-mx-6 mt-5 overflow-auto flex-1">
-          <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp"
-              }
-              details={
-                "Цыпленок, моцарелла, сыр чеддер и пармезан, сырный соус, томаты, соус альфредо, чеснок"
-              }
-              name={"Омлет с ветчиной и грибами"}
-              price={123}
-              quantity={123}
-            />
-          </div>
+          {items.map((item) => (
+            <div key={item.id} className="mb-2">
+              <CartDrawerItem
+                id={item.id}
+                imageUrl={item.imageUrl}
+                details={
+                  item.pizzaType && item.pizzaSize
+                    ? getCartItemDetails(
+                        item.ingredients,
+                        item.pizzaType as PizzaType,
+                        item.pizzaSize as PizzaSize
+                      )
+                    : ""
+                }
+                name={item.name}
+                price={item.price}
+                quantity={item.quantity}
+                onRemove={() => removeCartItem(item.id)}
+                onClickCountButton={(type) =>
+                  onClickCountButton(item.id, item.quantity, type)
+                }
+              />
+            </div>
+          ))}
         </div>
         <SheetFooter className="mx-6 bg-white p-8">
           <div className="w-full">
@@ -62,7 +100,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
                 Итого
                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
               </span>
-              <span className="font-bold text-lg">{"Прайс"}</span>
+              <span className="font-bold text-lg">{totalAmount}</span>
             </div>
             <Link href={"/cart"}>
               <Button type="submit" className="w-full h-12 text-base">

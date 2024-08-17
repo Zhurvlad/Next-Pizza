@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { ProductWithRelations } from "@/@types/prisma";
 import { ChoosePizzaForm } from "../choose-pizza-form";
 import { Dialog, DialogContent } from "../../ui/dialog";
+import { useCartStore } from "@/shared/store";
+import toast from "react-hot-toast";
 
 interface Props {
   product: ProductWithRelations;
@@ -14,7 +16,28 @@ interface Props {
 
 export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
   const router = useRouter();
-  const izPizza = Boolean(product.variations[0].pizzaType);
+  const firstItem = product.variations[0];
+  const izPizza = Boolean(firstItem.pizzaType);
+  const addCartItem = useCartStore((state) => state.addCartItem);
+
+  const onAddProduct = () => {
+    addCartItem({
+      productVariationId: firstItem.id,
+    });
+  };
+
+  const onAddPizza = async (productItemId: number, ingredients: number[]) => {
+    try {
+      await addCartItem({
+        productItemId,
+        ingredients,
+      });
+      toast.success("Пицца добавлена в корзину");
+    } catch (error) {
+      toast.error("Произошла ошибка при добавлении в корзину");
+      console.log(error);
+    }
+  };
 
   return (
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
@@ -29,9 +52,15 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
             name={product.name}
             ingredients={product.ingredients}
             variations={product.variations}
+            onClickAddCart={onAddPizza}
           />
         ) : (
-          <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
+          <ChooseProductForm
+            imageUrl={product.imageUrl}
+            name={product.name}
+            onClickAdd={onAddProduct}
+            price={firstItem.price}
+          />
         )}
       </DialogContent>
     </Dialog>
