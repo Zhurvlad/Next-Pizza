@@ -17,24 +17,48 @@ interface Props {
 export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
   const router = useRouter();
   const firstItem = product.variations[0];
-  const izPizza = Boolean(firstItem.pizzaType);
-  const addCartItem = useCartStore((state) => state.addCartItem);
+  const isPizzaForm = Boolean(firstItem.pizzaType);
+  const [addCartItem, loading] = useCartStore((state) => [
+    state.addCartItem,
+    state.loading,
+  ]);
 
-  const onAddProduct = () => {
-    addCartItem({
-      productVariationId: firstItem.id,
-    });
-  };
+  // const onAddProduct = () => {
+  //   addCartItem({
+  //     productVariationId: firstItem.id,
+  //   });
+  // };
 
-  const onAddPizza = async (productItemId: number, ingredients: number[]) => {
+  // const onAddPizza = async (productItemId: number, ingredients: number[]) => {
+  //   try {
+  //     await addCartItem({
+  //       productItemId,
+  //       ingredients,
+  //     });
+  //     router.back();
+  //     toast.success("Пицца добавлена в корзину");
+  //   } catch (error) {
+  //     toast.error("Произошла ошибка при добавлении в корзину");
+  //     console.log(error);
+  //   }
+  // };
+
+  const onSubmit = async (
+    productVariantId?: number,
+    ingredients?: number[]
+  ) => {
     try {
+      const variantId = productVariantId ?? firstItem.id;
+
       await addCartItem({
-        productItemId,
+        productItemId: variantId,
         ingredients,
       });
-      toast.success("Пицца добавлена в корзину");
+
+      router.back();
+      toast.success(product.name + " добавлена в корзину");
     } catch (error) {
-      toast.error("Произошла ошибка при добавлении в корзину");
+      toast.error("Произошла ошибка при добавлении товара в корзину");
       console.log(error);
     }
   };
@@ -46,20 +70,22 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
           "p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden"
         )}
       >
-        {izPizza ? (
+        {isPizzaForm ? (
           <ChoosePizzaForm
             imageUrl={product.imageUrl}
             name={product.name}
             ingredients={product.ingredients}
             variations={product.variations}
-            onClickAddCart={onAddPizza}
+            onClickAddCart={onSubmit}
+            loading={loading}
           />
         ) : (
           <ChooseProductForm
             imageUrl={product.imageUrl}
             name={product.name}
-            onClickAdd={onAddProduct}
+            onClickAdd={onSubmit}
             price={firstItem.price}
+            loading={loading}
           />
         )}
       </DialogContent>

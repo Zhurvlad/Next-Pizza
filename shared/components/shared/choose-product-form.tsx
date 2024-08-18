@@ -13,6 +13,7 @@ interface Props {
   ingredients?: ProductWithRelations[];
   variations?: ProductWithRelations[];
   price: number;
+  loading?: boolean;
 }
 
 export const ChooseProductForm: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const ChooseProductForm: React.FC<Props> = ({
   imageUrl,
   name,
   price,
+  loading,
 }) => {
   return (
     <div className={cn(className, "flex flex-1")}>
@@ -36,7 +38,8 @@ export const ChooseProductForm: React.FC<Props> = ({
 
         {/* <p className="text-gray-400">{textDetaills}</p> */}
         <Button
-          onClick={onClickAdd}
+          loading={loading}
+          onClick={() => onClickAdd?.()}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
         >
           Добавить в корзину за {price}
