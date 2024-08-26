@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/shared/lib/utils";
 import { CheckoutItemDetails, WhiteBlock } from ".";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
-import { Button } from "../ui";
+import { Button, Skeleton } from "../ui";
 
 const VAT = 0.15;
 const DELIVERY_PRICE = 250;
@@ -10,11 +10,13 @@ const DELIVERY_PRICE = 250;
 interface Props {
   className?: string;
   totalAmount: number;
+  loading?: boolean;
 }
 
 export const CheckoutSidebar: React.FC<Props> = ({
   totalAmount,
   className,
+  loading,
 }) => {
   const vatPrice = Math.round(totalAmount * VAT);
   const totalPrice = totalAmount + DELIVERY_PRICE;
@@ -23,7 +25,13 @@ export const CheckoutSidebar: React.FC<Props> = ({
     <WhiteBlock className={(cn("p-6 sticky top-4"), className)}>
       <div className="flex flex-col gap-1">
         <span className="text-xl">Итого:</span>
-        <span className="text-[34px] font-extrabold">{totalPrice}</span>
+        {loading ? (
+          <Skeleton className="w-48 h-11" />
+        ) : (
+          <span className="h-11 text-[34px] font-extrabold">
+            {totalPrice} ₽
+          </span>
+        )}
       </div>
       <CheckoutItemDetails
         title={
@@ -32,7 +40,13 @@ export const CheckoutSidebar: React.FC<Props> = ({
             Стоимость товаров:
           </div>
         }
-        value={`${totalAmount}`}
+        value={
+          loading ? (
+            <Skeleton className="w-16 h-6 rounded-[6px]" />
+          ) : (
+            `${totalAmount}  ₽`
+          )
+        }
       />
 
       <CheckoutItemDetails
@@ -42,7 +56,13 @@ export const CheckoutSidebar: React.FC<Props> = ({
             Налоги:
           </div>
         }
-        value={`${vatPrice}`}
+        value={
+          loading ? (
+            <Skeleton className="w-16 h-6 rounded-[6px]" />
+          ) : (
+            `${vatPrice}  ₽`
+          )
+        }
       />
       <CheckoutItemDetails
         title={
@@ -51,7 +71,13 @@ export const CheckoutSidebar: React.FC<Props> = ({
             Доставка:
           </div>
         }
-        value={`${DELIVERY_PRICE}`}
+        value={
+          loading ? (
+            <Skeleton className="w-16 h-6 rounded-[6px]" />
+          ) : (
+            `${DELIVERY_PRICE}  ₽`
+          )
+        }
       />
       <Button
         type="submit"
