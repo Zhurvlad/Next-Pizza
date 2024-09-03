@@ -16,9 +16,12 @@ import { cn } from "@/shared/lib/utils";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
 import React from "react";
+import { useSession } from "next-auth/react";
+import { Api } from "@/shared/services/api-client";
 
 export default function CheckoutPage() {
   const [submitting, setSubmitting] = React.useState(false);
+  const { data: session } = useSession();
   const { updateItemQuantity, items, totalAmount, removeCartItem, loading } =
     useCart();
 
@@ -33,6 +36,21 @@ export default function CheckoutPage() {
       comment: "",
     },
   });
+
+  React.useState(() => {
+    async function fetchUserInfo() {
+      const data = await Api.auth.getMe();
+      const [firstName, lastName] = data.fullName.split(" ");
+
+      form.setValue("firstName", firstName);
+      form.setValue("lastName", lastName);
+      form.setValue("email", data.email);
+    }
+
+    if (session) {
+      fetchUserInfo();
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<CheckoutFormValues> = async (data) => {
     try {

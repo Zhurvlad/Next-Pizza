@@ -13,7 +13,7 @@ import {
 } from ".";
 import { ArrowRight, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -27,12 +27,30 @@ export const Header: React.FC<Props> = ({
   hasCart = true,
   className,
 }) => {
+  const router = useRouter();
   const [openAuthModal, setOpenAuthModal] = React.useState(false);
   const searchParams = useSearchParams();
 
   React.useEffect(() => {
+    let toastMessage = "";
+
     if (searchParams.has("paid")) {
-      toast.success("Заказ успешно оплачен! Информация отправлена на почту.");
+      toastMessage = "Заказ успешно оплачен! Информация отправлена на почту.";
+    }
+
+    if (searchParams.has("verified")) {
+      toastMessage = "Почта успешно подтверждена!";
+    }
+
+    if (toastMessage) {
+      setTimeout(() => {
+        router.replace("/");
+        toast.success(
+          toastMessage,
+
+          { duration: 3000 }
+        );
+      }, 1000);
     }
   }, []);
 

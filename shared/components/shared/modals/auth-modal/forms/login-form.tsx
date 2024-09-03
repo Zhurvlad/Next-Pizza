@@ -8,10 +8,10 @@ import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 
 interface Props {
-  onCLose?: VoidFunction;
+  onClose?: VoidFunction;
 }
 
-export const LoginForm: React.FC<Props> = ({ onCLose }) => {
+export const LoginForm: React.FC<Props> = ({ onClose }) => {
   const form = useForm<TFormLoginValues>({
     resolver: zodResolver(formLoginSchema),
     defaultValues: {
@@ -32,7 +32,7 @@ export const LoginForm: React.FC<Props> = ({ onCLose }) => {
       }
 
       toast.success("Вы успешно вошли в аккаунт");
-      onCLose?.();
+      onClose?.();
     } catch (error) {
       console.log("Error [LOGIN]", error);
       toast.error("Произошла ошибка при войти в аккаунт");
