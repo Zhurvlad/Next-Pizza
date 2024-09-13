@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
-import { cn } from "@/shared/lib/utils";
+import Link from "next/link";
 import { Search } from "lucide-react";
 import { useClickAway, useDebounce } from "react-use";
-import Link from "next/link";
+
 import { Api } from "@/shared/services/api-client";
+import { cn } from "@/shared/lib/utils";
+
 import { Product } from "@prisma/client";
 
 interface Props {
@@ -21,6 +23,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
     setFocused(false);
   });
 
+  /*Отправляем запрос при изменении значения в инпуте*/
   useDebounce(
     async () => {
       try {
@@ -61,15 +64,14 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-
-        {products.length > 0 && (
-          <div
-            className={cn(
-              "absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-300 invisible opacity-0 z-30",
-              focused && "visible opacity-100 top-12"
-            )}
-          >
-            {products.map((product) => (
+        <div
+          className={cn(
+            "absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-300 invisible opacity-0 z-30",
+            focused && "visible opacity-100 top-12"
+          )}
+        >
+          {products.length > 0 ? (
+            products.map((product) => (
               <Link
                 onClick={onClickItem}
                 key={product.id}
@@ -83,9 +85,13 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
                 />
                 <div>{product.name}</div>
               </Link>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            <div className="flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10">
+              <div>Ничего не найдено по вашему запросу</div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

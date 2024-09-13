@@ -24,6 +24,7 @@ const genearteProductVariations = ({
   } as Prisma.ProductVariationsUncheckedCreateInput;
 };
 
+/* Генерация сидов */
 async function up() {
   await prisma.user.createMany({
     data: [
@@ -266,6 +267,7 @@ async function up() {
   });
 }
 
+/* Удаление сидов */
 async function down() {
   await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE`;

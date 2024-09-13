@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
+
 import { cn } from "@/shared/lib/utils";
-import { Title } from "./title";
+
+import { useFilters, useIngredients, useQueryFilters } from "@/shared/hooks";
 import { CheckboxFiltersGroup } from ".";
 import { Input, RangeSlider } from "../ui";
-import { useRouter } from "next/navigation";
-import { useFilters, useIngredients, useQueryFilters } from "@/shared/hooks";
+import { Title } from "./title";
 
 interface Props {
   className?: string;
@@ -18,7 +19,6 @@ interface PriceRangeProps {
 
 export const Filters: React.FC<Props> = ({ className }) => {
   const { ingredients, loading } = useIngredients();
-  const router = useRouter();
 
   const filters = useFilters();
 
@@ -101,8 +101,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
       <CheckboxFiltersGroup
         title="Ингредиенты"
         className="mt-5"
-        limit={6}
-        defaultItems={ingredientsItem.slice(0, 6)}
+        limit={4}
+        defaultItems={ingredientsItem.slice(0, 4)}
         items={ingredientsItem}
         loading={loading}
         onClickCheckbox={filters.setIngredients}
