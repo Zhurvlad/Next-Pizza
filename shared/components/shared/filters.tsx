@@ -4,17 +4,13 @@ import React from "react";
 import { cn } from "@/shared/lib/utils";
 
 import { useFilters, useIngredients, useQueryFilters } from "@/shared/hooks";
+
 import { CheckboxFiltersGroup } from ".";
 import { Input, RangeSlider } from "../ui";
 import { Title } from "./title";
 
 interface Props {
   className?: string;
-}
-
-interface PriceRangeProps {
-  priceFrom?: number;
-  priceTo?: number;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {

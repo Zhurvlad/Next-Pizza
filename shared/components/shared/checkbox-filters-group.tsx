@@ -31,7 +31,6 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupProps> = ({
   selected,
   name,
   onClickCheckbox,
-  defaultValue,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
@@ -71,7 +70,7 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupProps> = ({
         </div>
       )}
       <div className="flex flex-col gap-5 max-h-96 pr-2 overflow-auto scrollbar">
-        {list.map((item, index) => (
+        {list.map((item) => (
           <FilterCheckbox
             text={item.text}
             value={item.value}

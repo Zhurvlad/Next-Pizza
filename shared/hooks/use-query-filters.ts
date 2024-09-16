@@ -1,8 +1,10 @@
-import qs from "qs";
 import React from "react";
-import { Filters } from "./use-filters";
+import qs from "qs";
 import { useRouter } from "next/navigation";
 
+import { Filters } from "./use-filters";
+
+/*Достаём Query параметры и вшиваем их в браузерную строку */
 export const useQueryFilters = (filters: Filters) => {
   const isMounted = React.useRef(true);
   const router = useRouter();

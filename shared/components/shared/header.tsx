@@ -3,7 +3,6 @@ import React from "react";
 import { cn } from "@/shared/lib/utils";
 
 import Image from "next/image";
-import { Button } from "../ui";
 import {
   AuthModal,
   CartButton,
@@ -11,7 +10,6 @@ import {
   ProfileButton,
   SearchInput,
 } from ".";
-import { ArrowRight, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";

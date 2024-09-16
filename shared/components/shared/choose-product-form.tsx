@@ -1,9 +1,11 @@
 import React from "react";
+
 import { cn } from "@/shared/lib/utils";
-import { PizzaImage } from "./pizza-image";
-import { Title } from "./title";
-import { Button } from "../ui";
+
 import { ProductWithRelations } from "@/@types/prisma";
+
+import { Button } from "../ui";
+import { Title } from "./title";
 
 interface Props {
   className?: string;

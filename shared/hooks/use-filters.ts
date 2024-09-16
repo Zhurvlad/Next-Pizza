@@ -1,6 +1,6 @@
-import { useSearchParams } from "next/navigation";
 import React from "react";
 import { useSet } from "react-use";
+import { useSearchParams } from "next/navigation";
 
 interface PriceRangeProps {
   priceFrom?: number;
@@ -34,20 +34,27 @@ export const useFilters = (): ReturnProps => {
     string
   >;
 
+  /* Достаём при первом рендере Query параметры и если они есть то вшиваем их в стейт */
+
+  /*Фильтр ингредиентов */
   const [selectedIngredients, { toggle: toggleIngredients }] = useSet(
     new Set<string>(searchParams.get("ingredients")?.split(","))
   );
 
+  /*Фильтр цены */
   const [prices, setPrices] = React.useState<PriceRangeProps>({
     priceFrom: Number(searchParams.get("priceFrom")) || undefined,
     priceTo: Number(searchParams.get("priceTo")) || undefined,
   });
 
+  /*Фильтр размеров */
   const [sizes, { toggle: toggleSizes }] = useSet(
     new Set<string>(
       searchParams.has("sizes") ? searchParams.get("sizes")?.split(",") : []
     )
   );
+
+  /*Фильтр ьтпов */
   const [pizzaTypes, { toggle: togglePizzaType }] = useSet(
     new Set<string>(
       searchParams.has("pizzaTypes")
