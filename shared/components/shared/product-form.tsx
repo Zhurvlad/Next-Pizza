@@ -31,8 +31,8 @@ export const ProductForm: React.FC<Props> = ({
       const variantId = productVariantId ?? firstItem.id;
 
       await addCartItem({
-        productItemId: variantId,
-        ingredients,
+        productVariationsId: variantId,
+        ingredientsIds: ingredients,
       });
 
       toast.success(product.name + " добавлена в корзину");

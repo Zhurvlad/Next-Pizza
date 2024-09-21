@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma/prisma-client";
-import { calcCartItemTotalPrice } from ".";
+import { calcCartItemTotalPrice } from "./calc-cart-item-total-price";
 
 export const updateCartTotalAmount = async (token: string) => {
   const userCart = await prisma.cart.findFirst({
@@ -24,14 +24,14 @@ export const updateCartTotalAmount = async (token: string) => {
   });
 
   if (!userCart) {
-    return 0;
+    return;
   }
 
   const totalAmount = userCart.items.reduce((acc, item) => {
     return acc + calcCartItemTotalPrice(item);
   }, 0);
 
-  await prisma.cart.update({
+  return await prisma.cart.update({
     where: {
       id: userCart.id,
     },

@@ -1,26 +1,31 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+
+import { useCart } from "@/shared/hooks";
+
 import { cn } from "@/shared/lib/utils";
+
+import { getCartItemDetails } from "@/shared/lib";
+
+import { PizzaSize, PizzaType } from "@/shared/constance/pizza";
+
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/shared/components/ui/sheet";
-import Link from "next/link";
+
 import { Button } from "../ui";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+
 import { CartDrawerItem, Title } from ".";
-import { useCartStore } from "@/shared/store";
-import { getCartItemDetails } from "@/shared/lib";
-import { PizzaSize, PizzaType } from "@/shared/constance/pizza";
-import Image from "next/image";
-import { useCart } from "@/shared/hooks";
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { updateItemQuantity, items, totalAmount, removeCartItem } = useCart();

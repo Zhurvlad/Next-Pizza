@@ -1,8 +1,11 @@
-import { prisma } from "@/prisma/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+
+import { prisma } from "@/prisma/prisma-client";
+
+import { CreateCartVariationsValues } from "@/shared/services/dto/cart.dto";
+
 import { findOrCreateCart, updateCartTotalAmount } from "@/shared/lib";
-import { CreateCartItemValues } from "@/shared/services/dto/cart.dto";
 
 export async function GET(req: NextRequest) {
   try {
@@ -52,19 +55,24 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     let token = req.cookies.get("cartToken")?.value;
+
     if (!token) {
       token = crypto.randomUUID();
     }
 
     const userCart = await findOrCreateCart(token);
 
-    const data = (await req.json()) as CreateCartItemValues;
+    const data = (await req.json()) as CreateCartVariationsValues;
 
     const findCartItem = await prisma.cartItem.findFirst({
       where: {
         cartId: userCart.id,
-        productVariationsId: data.productVariationId,
-        ingredients: { every: { id: { in: data.ingredientsIds } } },
+        productVariationsId: data.productVariationsId,
+        ingredients: {
+          every: {
+            id: { in: data.ingredientsIds },
+          },
+        },
       },
     });
 
@@ -82,7 +90,7 @@ export async function POST(req: NextRequest) {
       await prisma.cartItem.create({
         data: {
           cartId: userCart.id,
-          productVariationsId: data.productVariationId,
+          productVariationsId: data.productVariationsId,
           quantity: 1,
           ingredients: { connect: data.ingredientsIds?.map((id) => ({ id })) },
         },

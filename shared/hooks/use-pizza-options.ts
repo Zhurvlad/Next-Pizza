@@ -1,9 +1,13 @@
 import React from "react";
-import { PizzaSize, PizzaType } from "../constance/pizza";
-import { Variant } from "../components/shared/group-variants";
 import { useSet } from "react-use";
-import { getAvailablePizzaSize } from "../lib";
+
 import { ProductVariations } from "@prisma/client";
+
+import { PizzaSize, PizzaType } from "../constance/pizza";
+
+import { getAvailablePizzaSize } from "../lib";
+
+import { Variant } from "../components/shared/group-variants";
 
 interface ReturnProps {
   size: PizzaSize;
@@ -26,11 +30,12 @@ export const usePizzaOptions = (
     (item) => item.pizzaType === type && item.size === size
   )?.id;
 
-  const availableSizes = getAvailablePizzaSize(type, variations);
-
   const [selectedIngredients, { toggle: addIngredients }] = useSet(
     new Set<number>([])
   );
+
+  /*Проверяем существование вариации пиццы. Если такой нет то переключаем на существующую.*/
+  const availableSizes = getAvailablePizzaSize(type, variations);
 
   React.useEffect(() => {
     const isAvailableSize = availableSizes?.find(

@@ -1,13 +1,14 @@
 "use client";
+
 import React from "react";
-import { cn } from "@/shared/lib/utils";
-import { ChooseProductForm, ProductForm, Title } from "..";
 import { useRouter } from "next/navigation";
+
 import { ProductWithRelations } from "@/@types/prisma";
-import { ChoosePizzaForm } from "../choose-pizza-form";
+
+import { cn } from "@/shared/lib/utils";
+
+import { ProductForm } from "..";
 import { Dialog, DialogContent } from "../../ui/dialog";
-import { useCartStore } from "@/shared/store";
-import toast from "react-hot-toast";
 
 interface Props {
   product: ProductWithRelations;
@@ -21,7 +22,8 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
       <DialogContent
         className={cn(
-          "p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden"
+          "p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden",
+          className
         )}
       >
         <ProductForm product={product} onSubmit={() => router.back()} />

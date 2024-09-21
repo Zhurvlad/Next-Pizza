@@ -18,13 +18,13 @@ import { GroupVariants } from "./group-variants";
 import { IngredientItem } from ".";
 
 interface Props {
-  className?: string;
   imageUrl: string;
   name: string;
   onClickAddCart: (itemId: number, ingredientsIds: number[]) => void;
   ingredients: Ingredient[];
   variations: ProductVariations[];
   loading?: boolean;
+  className?: string;
 }
 
 export const ChoosePizzaForm: React.FC<Props> = ({
