@@ -101,7 +101,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                       price={item.price}
                       quantity={item.quantity}
                       disabled={item.disabled}
-                      onRemove={() => removeCartItem(item.id)}
+                      onClickRemove={() => removeCartItem(item.id)}
                       onClickCountButton={(type) =>
                         onClickCountButton(item.id, item.quantity, type)
                       }
