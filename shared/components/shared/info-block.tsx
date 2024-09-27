@@ -1,9 +1,11 @@
 import React from "react";
-import { Button } from "../ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Title } from "./title";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
+
+import { Button } from "../ui/button";
+import { Title } from "./title";
 
 interface Props {
   title: string;

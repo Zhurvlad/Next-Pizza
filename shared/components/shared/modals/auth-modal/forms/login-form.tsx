@@ -1,11 +1,13 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { FormProvider, useForm } from "react-hook-form";
-import { formLoginSchema, TFormLoginValues } from "./schemas";
+import { signIn } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { formLoginSchema, TFormLoginValues } from "./schemas";
+
 import { FormInput, Title } from "../../..";
 import { Button } from "@/shared/components";
-import toast from "react-hot-toast";
-import { signIn } from "next-auth/react";
 
 interface Props {
   onClose?: VoidFunction;
@@ -35,7 +37,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
       onClose?.();
     } catch (error) {
       console.log("Error [LOGIN]", error);
-      toast.error("Произошла ошибка при войти в аккаунт");
+      toast.error("Произошла ошибка при входе в аккаунт");
     }
   };
 
@@ -68,7 +70,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
           className="h-12 text-base"
           type="submit"
         >
-          {/* {form.formState.isSubmitting ? "Вход..." : "Войти"} */} Войти
+          Войти
         </Button>
       </form>
     </FormProvider>

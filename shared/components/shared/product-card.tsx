@@ -1,10 +1,11 @@
 import React from "react";
-import { cn } from "@/shared/lib/utils";
 import Link from "next/link";
+import { Plus } from "lucide-react";
+
+import { Ingredient } from "@prisma/client";
+
 import { Title } from ".";
 import { Button } from "../ui";
-import { Plus } from "lucide-react";
-import { Ingredient } from "@prisma/client";
 
 interface Props {
   id: number;

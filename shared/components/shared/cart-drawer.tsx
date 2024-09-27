@@ -8,7 +8,6 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useCart } from "@/shared/hooks";
 
 import { cn } from "@/shared/lib/utils";
-
 import { getCartItemDetails } from "@/shared/lib";
 
 import { PizzaSize, PizzaType } from "@/shared/constance/pizza";
@@ -22,9 +21,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/shared/components/ui/sheet";
-
 import { Button } from "../ui";
-
 import { CartDrawerItem, Title } from ".";
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {

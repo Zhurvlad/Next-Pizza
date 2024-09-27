@@ -1,7 +1,8 @@
 import React from "react";
 import { useCartStore } from "../store";
-import { CartItem } from "@prisma/client";
+
 import { CartStateItem } from "../lib/get-cart-details";
+
 import { CreateCartVariationsValues } from "../services/dto/cart.dto";
 
 type ReturnProps = {

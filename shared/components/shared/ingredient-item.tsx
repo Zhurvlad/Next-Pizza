@@ -1,6 +1,7 @@
 import React from "react";
-import { cn } from "@/shared/lib/utils";
 import { CircleCheck } from "lucide-react";
+
+import { cn } from "@/shared/lib/utils";
 
 interface Props {
   imageUrl: string;

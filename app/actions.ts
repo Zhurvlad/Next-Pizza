@@ -8,10 +8,10 @@ import { OrderStatus, Prisma } from "@prisma/client";
 
 import { CheckoutFormValues } from "@/shared/constance";
 
-import { PayOrderTemplate } from "@/shared/components";
 import { createPayment, sendEmail } from "@/shared/lib";
 import { getUserSession } from "@/shared/lib/get-user-session";
 
+import { PayOrderTemplate } from "@/shared/components";
 import { VerificationUserTemplate } from "@/shared/components/shared/email-templates/verification-user";
 
 export async function createOrder(data: CheckoutFormValues) {

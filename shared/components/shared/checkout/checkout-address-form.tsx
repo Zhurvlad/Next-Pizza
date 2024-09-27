@@ -1,13 +1,12 @@
 import React from "react";
-import { ErrorText, WhiteBlock } from "..";
-import { FormInput, FormTextarea } from "../form";
-import { Textarea } from "../../ui";
-import { AdressInput } from "../address-input";
 import { Controller, useFormContext } from "react-hook-form";
+
+import { ErrorText, WhiteBlock } from "..";
+import { FormTextarea } from "../form";
+import { AdressInput } from "../address-input";
 
 interface Props {
   className?: string;
-  
 }
 
 export const CheckoutAddressForm: React.FC<Props> = ({ className }) => {
@@ -16,11 +15,6 @@ export const CheckoutAddressForm: React.FC<Props> = ({ className }) => {
   return (
     <WhiteBlock title="3. Адрес доставки" className={className}>
       <div className="flex flex-col gap-5">
-        {/* <FormInput
-          name="address"
-          className="text-base"
-          placeholder="Адрес доставки"
-        /> */}
         <Controller
           control={control}
           name="address"

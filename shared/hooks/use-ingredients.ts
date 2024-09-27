@@ -1,6 +1,8 @@
-import { Api } from "@/shared/services/api-client";
-import { Ingredient } from "@prisma/client";
 import React from "react";
+
+import { Ingredient } from "@prisma/client";
+
+import { Api } from "@/shared/services/api-client";
 
 interface ReturnProps {
   ingredients: Ingredient[];

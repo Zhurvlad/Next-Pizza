@@ -1,7 +1,9 @@
 import React from "react";
-import { cn } from "@/shared/lib/utils";
-import { CheckoutItemDetails, WhiteBlock } from ".";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
+
+import { cn } from "@/shared/lib/utils";
+
+import { CheckoutItemDetails, WhiteBlock } from ".";
 import { Button, Skeleton } from "../ui";
 
 const VAT = 0.15;

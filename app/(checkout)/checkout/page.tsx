@@ -1,8 +1,21 @@
 "use client";
 
+import React from "react";
+import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useCart } from "@/shared/hooks";
+
+import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constance";
+
+import { createOrder } from "@/app/actions";
+
+import { Api } from "@/shared/services/api-client";
+
+import { cn } from "@/shared/lib/utils";
+
 import {
   CheckoutAddressForm,
   CheckoutCart,
@@ -11,13 +24,6 @@ import {
   Container,
   Title,
 } from "@/shared/components";
-import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constance";
-import { cn } from "@/shared/lib/utils";
-import { createOrder } from "@/app/actions";
-import toast from "react-hot-toast";
-import React from "react";
-import { useSession } from "next-auth/react";
-import { Api } from "@/shared/services/api-client";
 
 export default function CheckoutPage() {
   const [submitting, setSubmitting] = React.useState(false);
@@ -37,7 +43,7 @@ export default function CheckoutPage() {
     },
   });
 
-  React.useState(() => {
+  React.useEffect(() => {
     async function fetchUserInfo() {
       const data = await Api.auth.getMe();
       const [firstName, lastName] = data.fullName.split(" ");
@@ -50,7 +56,7 @@ export default function CheckoutPage() {
     if (session) {
       fetchUserInfo();
     }
-  }, []);
+  }, [session]);
 
   const onSubmit: SubmitHandler<CheckoutFormValues> = async (data) => {
     try {

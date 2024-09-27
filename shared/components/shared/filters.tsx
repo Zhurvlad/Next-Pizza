@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 
-import { cn } from "@/shared/lib/utils";
-
 import { useFilters, useIngredients, useQueryFilters } from "@/shared/hooks";
+
+import { cn } from "@/shared/lib/utils";
 
 import { CheckboxFiltersGroup } from ".";
 import { Input, RangeSlider } from "../ui";

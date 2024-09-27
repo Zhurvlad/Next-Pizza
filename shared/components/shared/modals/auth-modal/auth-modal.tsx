@@ -1,7 +1,8 @@
 import React from "react";
+import { signIn } from "next-auth/react";
+
 import { Dialog, DialogContent } from "@/shared/components/ui/dialog";
 import { Button } from "@/shared/components";
-import { signIn } from "next-auth/react";
 import { LoginForm } from "./forms/login-form";
 import { RegisterForm } from "./forms/register-form";
 

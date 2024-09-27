@@ -1,12 +1,15 @@
 "use client";
 
-import { Api } from "@/shared/services/api-client";
 import React from "react";
-import { Container } from "./container";
-import { cn } from "@/shared/lib/utils";
 import { X } from "lucide-react";
 import ReactStories from "react-insta-stories";
+
+import { Api } from "@/shared/services/api-client";
 import { IStory } from "@/shared/services/stories";
+
+import { cn } from "@/shared/lib/utils";
+
+import { Container } from "./container";
 
 interface Props {
   className?: string;

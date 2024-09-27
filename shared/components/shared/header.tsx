@@ -1,8 +1,12 @@
 "use client";
-import React from "react";
-import { cn } from "@/shared/lib/utils";
 
+import React from "react";
+import Link from "next/link";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
+
+import { cn } from "@/shared/lib/utils";
 import {
   AuthModal,
   CartButton,
@@ -10,9 +14,6 @@ import {
   ProfileButton,
   SearchInput,
 } from ".";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
 
 interface Props {
   hasSearch?: boolean;

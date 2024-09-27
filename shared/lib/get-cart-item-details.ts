@@ -1,5 +1,5 @@
-import { Ingredient } from "@prisma/client";
 import { PizzaType, PizzaSize, mapPizzaType } from "../constance/pizza";
+
 import { CartStateItem } from "./get-cart-details";
 
 export const getCartItemDetails = (

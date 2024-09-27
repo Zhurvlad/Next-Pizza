@@ -1,6 +1,8 @@
 import { Ingredient, ProductVariations } from "@prisma/client";
-import { calcTotalPizzaPrice } from ".";
+
 import { mapPizzaType, PizzaSize, PizzaType } from "../constance/pizza";
+
+import { calcTotalPizzaPrice } from ".";
 
 interface ReturnProps {
   textDetaills: string;

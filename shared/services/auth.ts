@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+
 import { instance } from "./instance";
 
 export const getMe = async () => {

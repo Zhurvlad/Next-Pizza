@@ -1,6 +1,9 @@
 "use client";
+
 import React from "react";
+
 import { cn } from "@/shared/lib/utils";
+
 import { FilterCheckbox, FilterCheckboxProps } from "./filter-checkbox";
 import { Input, Skeleton } from "../ui";
 

@@ -1,6 +1,5 @@
-import { Resend } from "resend";
-import { PayOrderTemplate } from "../components";
 import React from "react";
+import { Resend } from "resend";
 
 export const sendEmail = async (
   to: string,

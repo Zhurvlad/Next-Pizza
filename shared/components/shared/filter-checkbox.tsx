@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/shared/lib/utils";
+
 import { Checkbox } from "../ui/checkbox";
 
 export interface FilterCheckboxProps {
